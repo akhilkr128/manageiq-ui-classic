@@ -1088,7 +1088,7 @@ window.miqObserveRequest = function(url, options) {
 
   var deferred = miqDeferred();
 
-  url && ManageIQ.observe.queue.push({
+  ManageIQ.observe.queue.push({
     url: url,
     options: options,
     deferred: deferred,

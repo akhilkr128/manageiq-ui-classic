@@ -191,6 +191,7 @@ module ApplicationController::Buttons
     @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
     @changed = (@edit[:new] != @edit[:current])
     valid = group_form_valid
+
     render :update do |page|
       page << javascript_prologue
       page.replace(@refresh_div, :partial => "shared/buttons/#{@refresh_partial}") if @refresh_div
@@ -721,7 +722,7 @@ module ApplicationController::Buttons
       end
     end
     @edit[:new][:available_fields] =
-      CustomButton.buttons_for(@sb[:applies_to_class])
+      CustomButton.buttons_for(@sb[:applies_to_class]).includes(:custom_button_sets)
                   .select { |u| u.custom_button_sets.blank? }
                   .sort_by(&:name)
                   .collect { |u| [u.name, u.id] }
